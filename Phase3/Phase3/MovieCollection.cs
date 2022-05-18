@@ -240,7 +240,7 @@ public class MovieCollection : IMovieCollection
 			else
 				return Search(movieTitle, root.RChild);
 		}
-		Console.WriteLine("Movie not found");
+		//Console.WriteLine("Movie not found");
 		return null;
     }
 

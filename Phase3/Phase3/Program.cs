@@ -1,4 +1,8 @@
-﻿void Header()
+﻿// initialising collection
+MovieCollection collection = new MovieCollection();
+bool staffkey = false; // checks if staff has been logged in before
+
+void Header()
 {
     Console.Clear();
     Console.WriteLine("============================================================");
@@ -112,6 +116,7 @@ void StaffMenu()
             DisplayMovieBorrowers();
             break;
         case 6:
+            staffkey = false;
             MainMenu();
             break;
     }
@@ -119,24 +124,118 @@ void StaffMenu()
 
 bool staffLogin() 
 {
+    if(staffkey) return true;
+    Header();
     Console.WriteLine("Staff Username: ");
     string user = Console.ReadLine();
     if(user.CompareTo("0") == 0)
     {
+        staffkey = false;
         MainMenu();
     }
     Console.WriteLine("Staff Password: ");
     string password = Console.ReadLine();
     if (user.CompareTo("staff") == 0 && password.CompareTo("today123") == 0)
     {
+        staffkey = true;
         return true;
     }
     Console.Clear();
     Header();
     return false;
 }
-void AddDVDs() { }
-void RemoveDVDs() { }
+
+void AddDVDs()
+{
+    Header();
+    Console.WriteLine("Adding movie to collection");
+    Console.WriteLine("Movie Name: ");
+    string movie_name = Console.ReadLine();
+    IMovie movie = collection.Search(movie_name);
+    // checking if movie exits
+    if(!collection.Search(movie))
+    {
+        // movie does not exist
+        Console.WriteLine("Movie genre (Action = 1, Comedy = 2, History = 3, Drama = 4, Western = 5): ");
+        MovieGenre genre = (MovieGenre)Int32.Parse(Console.ReadLine());
+        Console.WriteLine("Movie classification (G = 1, PG = 2, M = 3, M15+ = 4): ");
+        MovieClassification classification = (MovieClassification)Int32.Parse(Console.ReadLine());
+        Console.WriteLine("Movie duration: ");
+        int duration = Int32.Parse(Console.ReadLine());
+        IMovie new_movie = (IMovie)new Movie(movie_name, genre, classification, duration, 1);
+        collection.Insert(new_movie);
+        Console.WriteLine("Movie Has been added!");
+        Console.ReadLine();
+        // testing code
+        IMovie[] colArray1 = collection.ToArray();
+        Console.WriteLine(string.Join(',', (object[])colArray1));
+        Console.ReadLine();
+        // end test code
+        Console.Clear();
+        StaffMenu();
+    }
+    // if movie does exist
+    IMovie exist_movie = collection.Search(movie_name);
+    exist_movie.AvailableCopies++;
+    exist_movie.TotalCopies++;
+    Console.WriteLine("Number of copies has been increased!");
+    Console.ReadLine();
+    // testing code
+    IMovie[] colArray = collection.ToArray();
+    Console.WriteLine(string.Join(',', (object[])colArray));
+    Console.ReadLine();
+    // end test code
+    Console.Clear();
+    StaffMenu();
+}
+
+void RemoveDVDs()
+{
+    Header();
+    Console.WriteLine("Removing movie from collection");
+    Console.WriteLine("Movie Name: ");
+    string movie_name = Console.ReadLine();
+    if (collection.Search(collection.Search(movie_name)))
+    {
+        //movie is in collection
+        IMovie movie = collection.Search(movie_name);
+        if(movie.TotalCopies == 1)
+        {
+            // only 1 copy left
+            collection.Delete(movie);
+            Console.WriteLine("Movie has been deleted from collection");
+            // testing code
+            IMovie[] colArray0 = collection.ToArray();
+            Console.WriteLine(string.Join(',', (object[])colArray0));
+            Console.ReadLine();
+            // end test code
+            Console.ReadLine();
+            Console.Clear();
+            StaffMenu();
+        }
+        movie.TotalCopies--;
+        movie.AvailableCopies--;
+        Console.WriteLine("One of the movies had been removed from collection");
+        // testing code
+        IMovie[] colArray1 = collection.ToArray();
+        Console.WriteLine(string.Join(',', (object[])colArray1));
+        Console.ReadLine();
+        // end test code
+        Console.ReadLine();
+        Console.Clear();
+        StaffMenu();
+    }
+    Console.WriteLine("Movie is not in collection");
+    // testing code
+    IMovie[] colArray2 = collection.ToArray();
+    Console.WriteLine(string.Join(',', (object[])colArray2));
+    Console.ReadLine();
+    // end test code
+    Console.ReadLine();
+    Console.Clear();
+    StaffMenu();
+}
+
 void RegisterMember() { }
 void RemoveMember() { }
 void DisplayMember() { }

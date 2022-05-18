@@ -1,68 +1,70 @@
-﻿Console.WriteLine("CAB301 Phase 2 Test Program:\n");
+﻿void Header()
+{
+    Console.Clear();
+    Console.WriteLine("============================================================");
+    Console.WriteLine("  Welcome to Community Library Movie DVD Management System");
+    Console.WriteLine("============================================================");
+    Console.WriteLine();
+}
 
-// Creating BST 
-MovieCollection collection = new MovieCollection();
+void CreateMenu(string title, string[] options)
+{
+    Header();
+    string titleLines = new string('=', (60 - title.Length) / 2);
+    Console.WriteLine(titleLines + title + titleLines);
+    Console.WriteLine();
+    string choices = "";
+    for (int i = 0; i < options.Length; i++)
+    {
+        Console.WriteLine($"{i}. {options[i]}");
+        choices += $" {i}";
+    }
+    Console.WriteLine();
+    Console.WriteLine($"Enter your choice ==>{choices}");
+}
 
-IMovie Spiderman = (IMovie) new Movie("Spiderman", MovieGenre.Action, MovieClassification.M, 120, 3 );
-IMovie Spiderman2 = (IMovie)new Movie("Spiderman2", MovieGenre.Action, MovieClassification.M, 120, 3);
-IMovie Spiderman3 = (IMovie)new Movie("Spiderman3", MovieGenre.Action, MovieClassification.M, 120, 3);
-IMovie Calvin = (IMovie)new Movie("Calvin Has COVID", MovieGenre.Action, MovieClassification.M, 120, 3);
+void MainMenu()
+{
+    string title = "Main Menu";
+    string[] options =
+    {
+        "Staff Login",
+        "Member Login",
+        "Exit"
+    };
+    CreateMenu(title, options);
+}
 
-Console.WriteLine(Spiderman.ToString());
+MainMenu();
 
-Console.WriteLine();
-Console.WriteLine("Insert Function");
-collection.Insert(Spiderman);
-collection.Insert(Spiderman2);
-Console.WriteLine(collection.Search(Spiderman));
-Console.WriteLine(collection.Search(Spiderman2));
+void StaffMenu()
+{
+    Header();
+    Console.WriteLine("========================= Staff Menu =======================");
+    Console.WriteLine();
+    Console.WriteLine("1. Add new DVDs of a new movie to the system");
+    Console.WriteLine("2. Remove DVDs of a movie from the system");
+    Console.WriteLine("3. Register a new member with the system");
+    Console.WriteLine("4. Remove a registered member from the system");
+    Console.WriteLine("5. Display a member's contact phone number, given the member's name");
+    Console.WriteLine("6. Display all members who are currently renting a particular movie");
+    Console.WriteLine("0. Return to the main menu");
+    Console.WriteLine();
+    Console.WriteLine("Enter your choice ==> (1/2/3/4/5/6/0)");
+}
 
-Console.WriteLine();
-Console.WriteLine("Delete Function");
-collection.Delete(Spiderman);
-Console.WriteLine(collection.Search(Spiderman));
-Console.WriteLine(collection.Search(Spiderman2));
-
-
-collection.Insert(Spiderman3);
-collection.Insert(Spiderman);
-collection.Insert(Spiderman2);
-collection.Insert(Calvin);
-
-Console.WriteLine();
-Console.WriteLine("ToArray Function");
-IMovie[] colArray = collection.ToArray();
-Console.WriteLine(string.Join(',', (object[]) colArray));
-Console.WriteLine();
-
-
-Console.WriteLine("Search Function");
-Console.WriteLine(collection.Search("Spiderman").ToString());
-
-/*
-Console.WriteLine();
-Console.WriteLine("Clear Function");
-collection.Clear();
-Console.WriteLine(collection.Search(Spiderman));
-Console.WriteLine(collection.Search(Spiderman2));
-
-*/
-
-// testing borrow implementation
-// inserting movies
-Console.WriteLine();
-Console.WriteLine("duplicate test");
-collection.Insert(Spiderman);
-collection.Insert(Spiderman2);
-
-IMember Steve = new Member("Steve","Jones");
-Spiderman.AddBorrower(Steve);
-Console.WriteLine(Spiderman.ToString());
-Console.WriteLine();
-//Spiderman.RemoveBorrower(Steve);
-Spiderman.AddBorrower(Steve);
-Console.WriteLine(Spiderman.ToString());
-
-
-
-
+void MemberMenu()
+{
+    Header();
+    Console.WriteLine("========================= Member Menu ======================");
+    Console.WriteLine();
+    Console.WriteLine("1. Browse all the movies");
+    Console.WriteLine("2. Display all the information about a movie, given the title of the movie");
+    Console.WriteLine("3. Borrow a movie DVD");
+    Console.WriteLine("4. Return a movie DVD");
+    Console.WriteLine("5. List current borrowing movies");
+    Console.WriteLine("6. Display the top 3 movies rented by the members");
+    Console.WriteLine("0. Return to the main menu");
+    Console.WriteLine();
+    Console.WriteLine("Enter your choice ==> (1/2/3/4/5/6/0)");
+}

@@ -2,6 +2,7 @@
 MovieCollection collection = new MovieCollection();
 MemberCollection MemberCollection = new MemberCollection(10);
 bool staffkey = false; // checks if staff has been logged in before
+bool memkey = false; // checks if staff has been logged in before
 
 void Header()
 {
@@ -357,6 +358,14 @@ void MemberMenu()
         "Display the top 3 movies rented by the members",
         "Return to the main menu",
     };
+
+    if (!memberLogin())
+    {
+        Console.WriteLine("Incorrect Login Details");
+        Console.WriteLine("Please try again or type 0 to return to the main menu");
+        Console.WriteLine();
+        StaffMenu();
+    }
     int choice = CreateMenu(title, options);
 
     switch (choice)
@@ -385,7 +394,41 @@ void MemberMenu()
     }
 }
 
-void BrowseMovies() { }
+bool memberLogin()
+{
+    if (memkey) return true;
+    Header();
+    Console.WriteLine("Username: ");
+    string user = Console.ReadLine();
+    if (user.CompareTo("0") == 0)
+    {
+        memkey = false;
+        MainMenu();
+    }
+    Console.WriteLine("Password: ");
+    string password = Console.ReadLine();
+    if (user.CompareTo(user) == 0 && password.CompareTo(password) == 0)
+    {
+        memkey = true;
+        return true;
+    }
+    Console.Clear();
+    Header();
+    return false;
+}
+
+void BrowseMovies() {
+    Header();
+    Console.WriteLine("Available Movies: ");
+    if (collection.ToArray() != null)
+    {
+        Console.WriteLine(collection.ToArray());
+        Console.ReadLine();
+        Console.Clear();
+        MainMenu();
+    }
+    else { Console.WriteLine("There are no available movies.");  }
+}
 void DisplayMovieInfo() { }
 void BorrowDVD() { }
 void ReturnDVD() { }

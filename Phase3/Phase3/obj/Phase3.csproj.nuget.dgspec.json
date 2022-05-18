@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\n9996095\\Documents\\CAB301_Group\\Phase3\\Phase3\\Phase3.csproj": {}
+    "C:\\Users\\61424\\Desktop\\UniGit\\CAB301_Group\\Phase3\\Phase3\\Phase3.csproj": {}
   },
   "projects": {
-    "C:\\Users\\n9996095\\Documents\\CAB301_Group\\Phase3\\Phase3\\Phase3.csproj": {
+    "C:\\Users\\61424\\Desktop\\UniGit\\CAB301_Group\\Phase3\\Phase3\\Phase3.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\n9996095\\Documents\\CAB301_Group\\Phase3\\Phase3\\Phase3.csproj",
+        "projectUniqueName": "C:\\Users\\61424\\Desktop\\UniGit\\CAB301_Group\\Phase3\\Phase3\\Phase3.csproj",
         "projectName": "Phase3",
-        "projectPath": "C:\\Users\\n9996095\\Documents\\CAB301_Group\\Phase3\\Phase3\\Phase3.csproj",
-        "packagesPath": "C:\\Users\\n9996095\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\n9996095\\Documents\\CAB301_Group\\Phase3\\Phase3\\obj\\",
+        "projectPath": "C:\\Users\\61424\\Desktop\\UniGit\\CAB301_Group\\Phase3\\Phase3\\Phase3.csproj",
+        "packagesPath": "C:\\Users\\61424\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\61424\\Desktop\\UniGit\\CAB301_Group\\Phase3\\Phase3\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\n9996095\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\61424\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -54,7 +54,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

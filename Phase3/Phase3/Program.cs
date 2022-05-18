@@ -80,6 +80,15 @@ void StaffMenu()
         "Return to the main menu",
 
     };
+
+    if (!staffLogin())
+    {
+        Console.WriteLine("Incorrect Login Details");
+        Console.WriteLine("Please try again or type 0 to return to the main menu");
+        Console.WriteLine();
+        StaffMenu();
+    }
+
     int choice = CreateMenu(title, options);
 
     switch (choice)
@@ -108,6 +117,24 @@ void StaffMenu()
     }
 }
 
+bool staffLogin() 
+{
+    Console.WriteLine("Staff Username: ");
+    string user = Console.ReadLine();
+    if(user.CompareTo("0") == 0)
+    {
+        MainMenu();
+    }
+    Console.WriteLine("Staff Password: ");
+    string password = Console.ReadLine();
+    if (user.CompareTo("staff") == 0 && password.CompareTo("today123") == 0)
+    {
+        return true;
+    }
+    Console.Clear();
+    Header();
+    return false;
+}
 void AddDVDs() { }
 void RemoveDVDs() { }
 void RegisterMember() { }

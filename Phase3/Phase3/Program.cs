@@ -7,7 +7,9 @@
     Console.WriteLine();
 }
 
-void CreateMenu(string title, string[] options)
+// Returns int corresponding to choice
+// Makes sure user returns valid input
+int CreateMenu(string title, string[] options)
 {
     Header();
     string titleLines = new string('=', (60 - title.Length) / 2);
@@ -21,6 +23,17 @@ void CreateMenu(string title, string[] options)
     }
     Console.WriteLine();
     Console.WriteLine($"Enter your choice ==>{choices}");
+    string input = Console.ReadLine();
+    int choice;
+    bool isNumeric = int.TryParse(input, out choice);
+    if (isNumeric && 0 <= choice && choice < options.Length)
+    {
+        return choice; // Return user input
+    }
+    Console.WriteLine();
+    Console.Write("Invalid input. Press enter to try again");
+    Console.ReadKey();
+    return CreateMenu(title, options); // Make user try again
 }
 
 void MainMenu()
@@ -32,39 +45,72 @@ void MainMenu()
         "Member Login",
         "Exit"
     };
-    CreateMenu(title, options);
+    int choice = CreateMenu(title, options);
+
+    switch (choice)
+    {
+        case 0:
+            StaffMenu();
+            break;
+        case 1:
+            MemberMenu();
+            break;
+        case 2:
+            Exit();
+            break;
+    }
 }
 
-MainMenu();
+void Exit()
+{
+    Environment.Exit(0);
+}
 
 void StaffMenu()
 {
-    Header();
-    Console.WriteLine("========================= Staff Menu =======================");
-    Console.WriteLine();
-    Console.WriteLine("1. Add new DVDs of a new movie to the system");
-    Console.WriteLine("2. Remove DVDs of a movie from the system");
-    Console.WriteLine("3. Register a new member with the system");
-    Console.WriteLine("4. Remove a registered member from the system");
-    Console.WriteLine("5. Display a member's contact phone number, given the member's name");
-    Console.WriteLine("6. Display all members who are currently renting a particular movie");
-    Console.WriteLine("0. Return to the main menu");
-    Console.WriteLine();
-    Console.WriteLine("Enter your choice ==> (1/2/3/4/5/6/0)");
+    string title = "Staff Menu";
+    string[] options =
+    {
+        "Add new DVDs of a new movie to the system",
+        "Remove DVDs of a movie from the system",
+        "Register a new member with the system",
+        "Remove a registered member from the system",
+        "Display a member's contact phone number, given the member's name",
+        "Display all members who are currently renting a particular movie",
+        "Return to the main menu",
+
+    };
+    int choice = CreateMenu(title, options);
+
+    switch (choice)
+    {
+        case 6:
+            MainMenu();
+            break;
+    }
 }
 
 void MemberMenu()
 {
-    Header();
-    Console.WriteLine("========================= Member Menu ======================");
-    Console.WriteLine();
-    Console.WriteLine("1. Browse all the movies");
-    Console.WriteLine("2. Display all the information about a movie, given the title of the movie");
-    Console.WriteLine("3. Borrow a movie DVD");
-    Console.WriteLine("4. Return a movie DVD");
-    Console.WriteLine("5. List current borrowing movies");
-    Console.WriteLine("6. Display the top 3 movies rented by the members");
-    Console.WriteLine("0. Return to the main menu");
-    Console.WriteLine();
-    Console.WriteLine("Enter your choice ==> (1/2/3/4/5/6/0)");
+    string title = "Member Menu";
+    string[] options =
+    {
+        "Browse all the movies",
+        "Display all the information about a movie, given the title of the movie",
+        "Borrow a movie DVD",
+        "Return a movie DVD",
+        "List current borrowing movies",
+        "Display the top 3 movies rented by the members",
+        "Return to the main menu",
+    };
+    int choice = CreateMenu(title, options);
+
+    switch (choice)
+    {
+        case 6:
+            MainMenu();
+            break;
+    }
 }
+
+MainMenu();

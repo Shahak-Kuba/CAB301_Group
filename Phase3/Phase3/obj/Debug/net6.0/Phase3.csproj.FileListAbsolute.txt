@@ -1,0 +1,15 @@
+C:\Users\n9996095\Documents\CAB301_Group\Phase3\Phase3\bin\Debug\net6.0\Phase3.exe
+C:\Users\n9996095\Documents\CAB301_Group\Phase3\Phase3\bin\Debug\net6.0\Phase3.deps.json
+C:\Users\n9996095\Documents\CAB301_Group\Phase3\Phase3\bin\Debug\net6.0\Phase3.runtimeconfig.json
+C:\Users\n9996095\Documents\CAB301_Group\Phase3\Phase3\bin\Debug\net6.0\Phase3.dll
+C:\Users\n9996095\Documents\CAB301_Group\Phase3\Phase3\bin\Debug\net6.0\Phase3.pdb
+C:\Users\n9996095\Documents\CAB301_Group\Phase3\Phase3\obj\Debug\net6.0\Phase3.csproj.AssemblyReference.cache
+C:\Users\n9996095\Documents\CAB301_Group\Phase3\Phase3\obj\Debug\net6.0\Phase3.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\n9996095\Documents\CAB301_Group\Phase3\Phase3\obj\Debug\net6.0\Phase3.AssemblyInfoInputs.cache
+C:\Users\n9996095\Documents\CAB301_Group\Phase3\Phase3\obj\Debug\net6.0\Phase3.AssemblyInfo.cs
+C:\Users\n9996095\Documents\CAB301_Group\Phase3\Phase3\obj\Debug\net6.0\Phase3.csproj.CoreCompileInputs.cache
+C:\Users\n9996095\Documents\CAB301_Group\Phase3\Phase3\obj\Debug\net6.0\Phase3.dll
+C:\Users\n9996095\Documents\CAB301_Group\Phase3\Phase3\obj\Debug\net6.0\refint\Phase3.dll
+C:\Users\n9996095\Documents\CAB301_Group\Phase3\Phase3\obj\Debug\net6.0\Phase3.pdb
+C:\Users\n9996095\Documents\CAB301_Group\Phase3\Phase3\obj\Debug\net6.0\Phase3.genruntimeconfig.cache
+C:\Users\n9996095\Documents\CAB301_Group\Phase3\Phase3\obj\Debug\net6.0\ref\Phase3.dll

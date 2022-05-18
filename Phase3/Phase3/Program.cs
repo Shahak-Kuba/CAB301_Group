@@ -84,11 +84,36 @@ void StaffMenu()
 
     switch (choice)
     {
+        case 0:
+            AddDVDs();
+            break;
+        case 1:
+            RemoveDVDs();
+            break;
+        case 2:
+            RegisterMember();
+            break;
+        case 3:
+            RemoveMember();
+            break;
+        case 4:
+            DisplayMember();
+            break;
+        case 5:
+            DisplayMovieBorrowers();
+            break;
         case 6:
             MainMenu();
             break;
     }
 }
+
+void AddDVDs() { }
+void RemoveDVDs() { }
+void RegisterMember() { }
+void RemoveMember() { }
+void DisplayMember() { }
+void DisplayMovieBorrowers() { }
 
 void MemberMenu()
 {
@@ -107,10 +132,35 @@ void MemberMenu()
 
     switch (choice)
     {
+        case 0:
+            BrowseMovies();
+            break;
+        case 1:
+            DisplayMovieInfo();
+            break;
+        case 2:
+            BorrowDVD();
+            break;
+        case 3:
+            ReturnDVD();
+            break;
+        case 4:
+            DisplayBorrowedMovies();
+            break;
+        case 5:
+            DisplayTop3Movies();
+            break;
         case 6:
             MainMenu();
             break;
     }
 }
+
+void BrowseMovies() { }
+void DisplayMovieInfo() { }
+void BorrowDVD() { }
+void ReturnDVD() { }
+void DisplayBorrowedMovies() { }
+void DisplayTop3Movies() { }
 
 MainMenu();

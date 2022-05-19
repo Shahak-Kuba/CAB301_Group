@@ -364,7 +364,7 @@ void MemberMenu()
         Console.WriteLine("Incorrect Login Details");
         Console.WriteLine("Please try again or type 0 to return to the main menu");
         Console.WriteLine();
-        StaffMenu();
+        MainMenu();
     }
     int choice = CreateMenu(title, options);
 
@@ -423,13 +423,25 @@ void BrowseMovies() {
     if (collection.ToArray() != null)
     {
         Console.WriteLine(collection.ToArray());
-        Console.ReadLine();
         Console.Clear();
         MainMenu();
     }
     else { Console.WriteLine("There are no available movies.");  }
 }
-void DisplayMovieInfo() { }
+void DisplayMovieInfo()
+{
+    Header();
+    Console.WriteLine("Enter Movie: ");
+    string movietitle = Console.ReadLine();
+    if (collection.Search(collection.Search(movietitle)))
+    {
+        IMovie movie = collection.Search(movietitle);
+        Console.WriteLine(movie.ToString());
+        Console.ReadLine();
+        Console.Clear();
+        MemberMenu();
+    }
+}
 void BorrowDVD() { }
 void ReturnDVD() { }
 void DisplayBorrowedMovies() { }

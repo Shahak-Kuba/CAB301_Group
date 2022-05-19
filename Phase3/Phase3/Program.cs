@@ -364,7 +364,7 @@ void MemberMenu()
         Console.WriteLine("Incorrect Login Details");
         Console.WriteLine("Please try again or type 0 to return to the main menu");
         Console.WriteLine();
-        MainMenu();
+        MemberMenu();
     }
     int choice = CreateMenu(title, options);
 
@@ -389,6 +389,7 @@ void MemberMenu()
             DisplayTop3Movies();
             break;
         case 6:
+            memkey = false;
             MainMenu();
             break;
     }
@@ -400,14 +401,15 @@ bool memberLogin()
     Header();
     Console.WriteLine("Username: ");
     string user = Console.ReadLine();
+    Console.WriteLine("Password: ");
+    string pin = Console.ReadLine();
+    IMember member = new Member("", "", user, pin);
     if (user.CompareTo("0") == 0)
     {
         memkey = false;
         MainMenu();
     }
-    Console.WriteLine("Password: ");
-    string password = Console.ReadLine();
-    if (user.CompareTo(user) == 0 && password.CompareTo(password) == 0)
+    if (users.Search(member))
     {
         memkey = true;
         return true;

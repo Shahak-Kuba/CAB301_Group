@@ -1,9 +1,9 @@
 ﻿// initialising collection
 MovieCollection collection = new MovieCollection();
-MemberCollection MemberCollection = new MemberCollection(10);
+MemberCollection users = new MemberCollection(10);
 bool staffkey = false; // checks if staff has been logged in before
 bool memkey = false; // checks if staff has been logged in before
-
+IMember testuser = new Member("Reggie", "OOF");
 void Header()
 {
     Console.Clear();
@@ -422,7 +422,8 @@ void BrowseMovies() {
     Console.WriteLine("Available Movies: ");
     if (collection.ToArray() != null)
     {
-        Console.WriteLine(collection.ToArray());
+        IMovie[] availmovies = collection.ToArray();
+        Console.WriteLine(availmovies);
         Console.Clear();
         MainMenu();
     }
@@ -433,18 +434,110 @@ void DisplayMovieInfo()
     Header();
     Console.WriteLine("Enter Movie: ");
     string movietitle = Console.ReadLine();
+    Console.WriteLine("Finding: " + movietitle);
     if (collection.Search(collection.Search(movietitle)))
     {
         IMovie movie = collection.Search(movietitle);
         Console.WriteLine(movie.ToString());
-        Console.ReadLine();
+        Console.ReadKey();
+        Console.Clear();
+        MemberMenu();
+    }
+    else
+    {
+        Console.WriteLine("This movie doesn't exist in our library please try again or press 0 to return to main menu");
+        Console.ReadKey();
         Console.Clear();
         MemberMenu();
     }
 }
-void BorrowDVD() { }
-void ReturnDVD() { }
-void DisplayBorrowedMovies() { }
+void BorrowDVD() {
+    Header();
+    Console.WriteLine("Enter title of movie you want to borrow: ");
+    string movietitle = Console.ReadLine();
+    if (collection.Search(collection.Search(movietitle)))
+    {
+        IMovie movie = collection.Search(movietitle);
+        Console.WriteLine("Borrowing: " + movie.ToString());
+        movie.AddBorrower(testuser); //Figure out how to initialise user collection
+        Console.ReadKey();
+        Console.Clear();
+        MemberMenu();
+    }
+    else
+    {
+        Console.WriteLine("This movietitle is invalid or not available");
+        Console.WriteLine("Please try again");
+        Console.ReadKey();
+        Console.Clear();
+        MemberMenu();
+    }
+    Console.ReadKey();
+    Console.Clear();
+    MemberMenu();
+}
+void ReturnDVD() {
+    Header();
+    Console.WriteLine("Enter title of movie you want to return: ");
+    string movietitle = Console.ReadLine();
+    if (collection.Search(collection.Search(movietitle)))
+    {
+        IMovie movie = collection.Search(movietitle);
+        Console.WriteLine("Returning: " + movie.ToString());
+        movie.RemoveBorrower(testuser); //Figure out how to initialise user collection
+        Console.ReadKey();
+        Console.Clear();
+        MemberMenu();
+    }
+    else
+    {
+        Console.WriteLine("This movietitle is invalid or not available");
+        Console.WriteLine("Please try again or press 0 to return to MainMenu");
+        Console.ReadKey();
+        Console.Clear();
+        MemberMenu();
+    }
+    Console.ReadKey();
+    Console.Clear();
+    MemberMenu();
+}
+void DisplayBorrowedMovies() {
+    Header();
+    //Search through all movies in collection and subsequent member collection borrowers for if the user is in them
+    IMovie[] searcharray = collection.ToArray();
+    IMovie[] borrowedmovies = { };
+    int j = 0;
+    for (int i = 0; i < searcharray.Length; i++)
+    {
+        if (searcharray[i].Borrowers == testuser)
+        {
+            borrowedmovies[j] = searcharray[i];
+            j++;
+        }
+    }
+    if (borrowedmovies != null)
+    {
+        Console.WriteLine(borrowedmovies);
+    }
+    else
+    {
+        Console.WriteLine("There are no movies borrowed under your account");
+    }
+    Console.ReadKey();
+    Console.Clear();
+    MemberMenu();
+}
+void DisplayTop3Movies() {
+    Header();
+    //find the 3 movies with highest borrowcount
+    IMovie[] searcharray = collection.ToArray();
+    IMovie[] recommendedmovies = { null, null, null };
+    Console.WriteLine("Top 3 Movies: ");
+    Console.WriteLine(recommendedmovies);
+    Console.ReadKey();
+    Console.Clear();
+    MemberMenu();
+}
 
 Movie[] ThreeLargest(MovieCollection movieCollection)
 {

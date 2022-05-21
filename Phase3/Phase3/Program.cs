@@ -3,7 +3,8 @@ MovieCollection collection = new MovieCollection();
 MemberCollection users = new MemberCollection(10);
 bool staffkey = false; // checks if staff has been logged in before
 bool memkey = false; // checks if staff has been logged in before
-IMember testuser = new Member("Reggie", "OOF");
+IMember testuser = new Member("Reggie", "OOF", "0123456789", "5431");
+users.Add(testuser);
 void Header()
 {
     Console.Clear();
@@ -399,11 +400,13 @@ bool memberLogin()
 {
     if (memkey) return true;
     Header();
+    Console.WriteLine(users.ToString());
     Console.WriteLine("Username: ");
     string user = Console.ReadLine();
     Console.WriteLine("Password: ");
     string pin = Console.ReadLine();
     IMember member = new Member("", "", user, pin);
+    Console.WriteLine(member.ToString());
     if (user.CompareTo("0") == 0)
     {
         memkey = false;

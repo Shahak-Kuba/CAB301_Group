@@ -2,9 +2,7 @@
 MovieCollection collection = new MovieCollection();
 MemberCollection users = new MemberCollection(10);
 bool staffkey = false; // checks if staff has been logged in before
-bool memkey = false; // checks if staff has been logged in before
-IMember testuser = new Member("Reggie", "OOF", "0123456789", "5431");
-users.Add(testuser);
+IMember memkey = null; // checks if staff has been logged in before
 void Header()
 {
     Console.Clear();
@@ -235,8 +233,11 @@ void RemoveDVDs()
     IMovie[] colArray2 = collection.ToArray();
     Console.WriteLine(string.Join(',', (object[])colArray2));
     Console.ReadLine();
+
     // end test code
     Console.WriteLine("Press Enter to return to staff menu");
+    Console.ReadLine();
+    // end test code
     Console.ReadLine();
     Console.Clear();
     StaffMenu();
@@ -390,7 +391,7 @@ void MemberMenu()
             DisplayTop3Movies();
             break;
         case 6:
-            memkey = false;
+            memkey = null;
             MainMenu();
             break;
     }
@@ -398,23 +399,26 @@ void MemberMenu()
 
 bool memberLogin()
 {
-    if (memkey) return true;
+    if (memkey != null) return true;
     Header();
-    Console.WriteLine(users.ToString());
-    Console.WriteLine("Username: ");
-    string user = Console.ReadLine();
+    Console.WriteLine(collection.ToString());
+    Console.WriteLine("FirstName: ");
+    string firstname = Console.ReadLine();
+    Console.WriteLine("LastName: ");
+    string lastname = Console.ReadLine();
     Console.WriteLine("Password: ");
     string pin = Console.ReadLine();
-    IMember member = new Member("", "", user, pin);
-    Console.WriteLine(member.ToString());
-    if (user.CompareTo("0") == 0)
+    IMember SearchMember = new Member(firstname, lastname);
+    if (firstname.CompareTo("0") == 0)
     {
-        memkey = false;
+        memkey = null;
         MainMenu();
     }
-    if (users.Search(member))
+    IMember member = MemberCollection.Find((IMember)SearchMember);
+    if (member != null && member.Pin == pin)
     {
-        memkey = true;
+        memkey = member;
+        Console.WriteLine(memkey.ToString);
         return true;
     }
     Console.Clear();
@@ -428,12 +432,15 @@ void BrowseMovies() {
     if (collection.ToArray() != null)
     {
         IMovie[] availmovies = collection.ToArray();
-        Console.WriteLine(availmovies);
+        Console.WriteLine(string.Join(",\n", (object[])availmovies));
+        Console.ReadLine();
         Console.Clear();
-        MainMenu();
+        MemberMenu();
     }
     else { Console.WriteLine("There are no available movies.");  }
 }
+
+//Error handling for nonexistent movie
 void DisplayMovieInfo()
 {
     Header();
@@ -456,15 +463,20 @@ void DisplayMovieInfo()
         MemberMenu();
     }
 }
+
+//Error handling for nonexistent movie
 void BorrowDVD() {
     Header();
     Console.WriteLine("Enter title of movie you want to borrow: ");
     string movietitle = Console.ReadLine();
+    Console.WriteLine("Search Result: " + collection.Search(movietitle));
+    Console.ReadLine();
+    Console.WriteLine("Search Result: " + collection.Search(collection.Search(movietitle)));
     if (collection.Search(collection.Search(movietitle)))
     {
         IMovie movie = collection.Search(movietitle);
-        Console.WriteLine("Borrowing: " + movie.ToString());
-        movie.AddBorrower(testuser); //Figure out how to initialise user collection
+        Console.WriteLine("Borrowing " + movie.ToString() + " under " + memkey.ToString());
+        movie.AddBorrower(memkey); //Figure out how to initialise user collection
         Console.ReadKey();
         Console.Clear();
         MemberMenu();
@@ -481,6 +493,8 @@ void BorrowDVD() {
     Console.Clear();
     MemberMenu();
 }
+
+//error handling for non-existent movie
 void ReturnDVD() {
     Header();
     Console.WriteLine("Enter title of movie you want to return: ");
@@ -489,7 +503,7 @@ void ReturnDVD() {
     {
         IMovie movie = collection.Search(movietitle);
         Console.WriteLine("Returning: " + movie.ToString());
-        movie.RemoveBorrower(testuser); //Figure out how to initialise user collection
+        movie.RemoveBorrower(memkey); //Figure out how to initialise user collection
         Console.ReadKey();
         Console.Clear();
         MemberMenu();
@@ -510,19 +524,21 @@ void DisplayBorrowedMovies() {
     Header();
     //Search through all movies in collection and subsequent member collection borrowers for if the user is in them
     IMovie[] searcharray = collection.ToArray();
-    IMovie[] borrowedmovies = { };
+    IMovieCollection borrowedmovies = new MovieCollection();
     int j = 0;
     for (int i = 0; i < searcharray.Length; i++)
     {
-        if (searcharray[i].Borrowers == testuser)
+/*        Console.WriteLine("Borrowers: " + searcharray[i].Borrowers.ToString());*/
+        if (searcharray[i].Borrowers.Search(memkey))
         {
-            borrowedmovies[j] = searcharray[i];
-            j++;
+            borrowedmovies.Insert(searcharray[i]);
         }
     }
+    IMovie[] borrowedmoviesarray = borrowedmovies.ToArray();
     if (borrowedmovies != null)
     {
-        Console.WriteLine(borrowedmovies);
+        Console.WriteLine("Borrowed Movies: ");
+        Console.WriteLine(string.Join(',', (object[])borrowedmoviesarray));
     }
     else
     {
@@ -536,9 +552,10 @@ void DisplayTop3Movies() {
     Header();
     //find the 3 movies with highest borrowcount
     IMovie[] searcharray = collection.ToArray();
+    Console.WriteLine(string.Join(',', (object[])searcharray));
     IMovie[] recommendedmovies = { null, null, null };
     Console.WriteLine("Top 3 Movies: ");
-    Console.WriteLine(recommendedmovies);
+    Console.WriteLine(string.Join(',', (object[])recommendedmovies));
     Console.ReadKey();
     Console.Clear();
     MemberMenu();

@@ -207,7 +207,7 @@ public class MovieCollection : IMovieCollection
 
 	private bool Search(IMovie movie, BTreeNode root)
 	{
-		if (root != null)
+		if (root != null && movie != null)
 		{
 			if (movie.CompareTo(root.Movie) == 0)
 				return true;

@@ -65,7 +65,7 @@ public class Member : IMember
     // Post-condition: a  string containing the first name, last name, and contact number of this member is returned
     public string ToString()
     {
-        return lastName + ", " + firstName;
+        return string.Format("Fist Name: {0}, Last Name: {1}, Phone Number: {2}, Pin: {3}", FirstName, LastName, ContactNumber, Pin);
     }
 }
 

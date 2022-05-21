@@ -1,5 +1,6 @@
 ﻿// initialising collection
 MovieCollection collection = new MovieCollection();
+MemberCollection MemberCollection = new MemberCollection(10);
 bool staffkey = false; // checks if staff has been logged in before
 
 void Header()
@@ -126,14 +127,14 @@ bool staffLogin()
 {
     if(staffkey) return true;
     Header();
-    Console.WriteLine("Staff Username: ");
+    Console.Write("Staff Username: ");
     string user = Console.ReadLine();
     if(user.CompareTo("0") == 0)
     {
         staffkey = false;
         MainMenu();
     }
-    Console.WriteLine("Staff Password: ");
+    Console.Write("Staff Password: ");
     string password = Console.ReadLine();
     if (user.CompareTo("staff") == 0 && password.CompareTo("today123") == 0)
     {
@@ -149,18 +150,18 @@ void AddDVDs()
 {
     Header();
     Console.WriteLine("Adding movie to collection");
-    Console.WriteLine("Movie Name: ");
+    Console.Write("Movie Name: ");
     string movie_name = Console.ReadLine();
-    IMovie movie = collection.Search(movie_name);
+    Movie movie = new Movie(movie_name);
     // checking if movie exits
-    if(!collection.Search(movie))
+    if(!collection.Search((IMovie)movie))
     {
         // movie does not exist
-        Console.WriteLine("Movie genre (Action = 1, Comedy = 2, History = 3, Drama = 4, Western = 5): ");
+        Console.Write("Movie genre (Action = 1, Comedy = 2, History = 3, Drama = 4, Western = 5): ");
         MovieGenre genre = (MovieGenre)Int32.Parse(Console.ReadLine());
-        Console.WriteLine("Movie classification (G = 1, PG = 2, M = 3, M15+ = 4): ");
+        Console.Write("Movie classification (G = 1, PG = 2, M = 3, M15+ = 4): ");
         MovieClassification classification = (MovieClassification)Int32.Parse(Console.ReadLine());
-        Console.WriteLine("Movie duration: ");
+        Console.Write("Movie duration: ");
         int duration = Int32.Parse(Console.ReadLine());
         IMovie new_movie = (IMovie)new Movie(movie_name, genre, classification, duration, 1);
         collection.Insert(new_movie);
@@ -169,8 +170,9 @@ void AddDVDs()
         // testing code
         IMovie[] colArray1 = collection.ToArray();
         Console.WriteLine(string.Join(',', (object[])colArray1));
-        Console.ReadLine();
         // end test code
+        Console.WriteLine("Press Enter to return to staff menu");
+        Console.ReadLine();
         Console.Clear();
         StaffMenu();
     }
@@ -221,6 +223,7 @@ void RemoveDVDs()
         Console.WriteLine(string.Join(',', (object[])colArray1));
         Console.ReadLine();
         // end test code
+        Console.WriteLine("Press Enter to return to staff menu");
         Console.ReadLine();
         Console.Clear();
         StaffMenu();
@@ -231,15 +234,115 @@ void RemoveDVDs()
     Console.WriteLine(string.Join(',', (object[])colArray2));
     Console.ReadLine();
     // end test code
+    Console.WriteLine("Press Enter to return to staff menu");
     Console.ReadLine();
     Console.Clear();
     StaffMenu();
 }
 
-void RegisterMember() { }
-void RemoveMember() { }
-void DisplayMember() { }
-void DisplayMovieBorrowers() { }
+void RegisterMember() 
+{
+    Header();
+    Console.WriteLine("Registering a new member");
+    Console.Write("Member First Name: ");
+    string MemberFirstName = Console.ReadLine();
+    Console.Write("Member Last Name: ");
+    string MemberLastName = Console.ReadLine();
+    string MemberNumber = RequestNumber(0);
+    string MemberPin = RequestNumber(1);
+    //Member
+    Member NewMember = new Member(MemberFirstName, MemberLastName, MemberNumber, MemberPin);
+    MemberCollection.Add((IMember)NewMember);
+    // Test Code
+    /*Console.WriteLine("Member has been added");
+    Console.WriteLine(MemberCollection.ToString());
+    Console.ReadLine();*/
+    // End of test code
+    Console.WriteLine("Press Enter to return to staff menu");
+    Console.ReadLine();
+    StaffMenu();
+}
+
+string RequestNumber(int reqType)
+{
+    bool valid = false;
+    string Number = "";
+    while(!valid)
+    {
+        if (reqType == 0) Console.Write("Please insert a valid phone number: ");
+        else Console.Write("Please insert a valid pin: ");
+        Number = Console.ReadLine(); 
+        if(reqType == 0)
+        {
+            if (IMember.IsValidContactNumber(Number)) valid = true;
+            else
+            {
+                Console.WriteLine("This is not a valid phone number please try again");
+            }
+        }
+        else
+        {
+            if (IMember.IsValidPin(Number)) valid = true;
+            else
+            {
+                Console.WriteLine("This is not a valid pin please try again");
+            }
+        }
+    }
+    return Number;
+}
+
+void RemoveMember() 
+{
+    Header();
+    Console.WriteLine("Removing a member");
+    Console.Write("Member First Name: ");
+    string MemberFirstName = Console.ReadLine();
+    Console.Write("Member Last Name: ");
+    string MemberLastName = Console.ReadLine();
+    Member RemoveMember = new Member(MemberFirstName, MemberLastName);
+    MemberCollection.Delete((IMember) RemoveMember);
+    // Test Code
+    Console.WriteLine(MemberCollection.ToString());
+    Console.ReadLine();
+    // End of Test Code
+    Console.WriteLine("Press Enter to return to staff menu");
+    StaffMenu();
+}
+
+void DisplayMember() 
+{
+    Header();
+    Console.WriteLine("Search a member's details");
+    Console.Write("Member First Name: ");
+    string MemberFirstName = Console.ReadLine();
+    Console.Write("Member Last Name: ");
+    string MemberLastName = Console.ReadLine();
+    Member SearchMember = new Member(MemberFirstName, MemberLastName);
+    if(MemberCollection.Search((IMember) SearchMember))
+    {
+        Console.WriteLine("Member Details: ");
+        IMember member = MemberCollection.Find((IMember)SearchMember);
+        Console.WriteLine(member.ToString());
+    }
+    Console.WriteLine("Press Enter to return to staff menu");
+    Console.ReadLine();
+    StaffMenu();
+
+}
+
+void DisplayMovieBorrowers()
+{
+    Header();
+    Console.WriteLine("Members who have borrowed a particular movie: ");
+    Console.Write("Movie Name: ");
+    string MovieName = Console.ReadLine();
+    IMovie MovieObj = collection.Search(MovieName);
+    Console.WriteLine(MovieObj.Borrowers.ToString());
+    Console.WriteLine("Press Enter to return to staff menu");
+    Console.ReadLine();
+    StaffMenu();
+}
 
 void MemberMenu()
 {

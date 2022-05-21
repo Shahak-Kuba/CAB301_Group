@@ -144,6 +144,43 @@ public class MemberCollection : IMemberCollection
         return false;
     }
 
+    // Find a given member in this member collection 
+    // Pre-condition: nil
+    // Post-condition: return the reference of the member object in the member collection, if this member is in the member collection; return null otherwise; member collection remains unchanged
+
+    public IMember Find(IMember member)
+    {
+        // typecasting from IMember type to Member type
+        Member sMember = (Member)member;
+
+        // initialising binary search parameters
+        int l = 0;
+        int r = count - 1;
+
+        // performing binary search
+        while (l <= r)
+        {
+            int m = (l + r) / 2;
+            // checking if the middle member 
+            if (sMember.CompareTo(members[m]) == 0)
+            {
+                return members[m];
+            }
+            else if (sMember.CompareTo(members[m]) < 0)
+            {
+                r = m - 1;
+            }
+            else
+            {
+                l = m + 1;
+            }
+        }
+
+        // member not found return false
+        return null;
+    }
+
+
     // Remove all the members in this member collection
     // Pre-condition: nil
     // Post-condition: no member in this member collection 

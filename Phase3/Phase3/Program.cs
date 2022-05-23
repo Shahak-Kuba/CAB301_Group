@@ -390,6 +390,73 @@ void DisplayMovieInfo() { }
 void BorrowDVD() { }
 void ReturnDVD() { }
 void DisplayBorrowedMovies() { }
-void DisplayTop3Movies() { }
+
+Movie[] ThreeLargest(MovieCollection movieCollection)
+{
+    // Create empty movie with -infinity borrows
+    Movie emptyMovie = new Movie(String.Empty);
+    emptyMovie.NoBorrowings = -Int32.MaxValue;
+
+    Movie[] L = { emptyMovie, emptyMovie, emptyMovie };
+    foreach (Movie movie in movieCollection.ToArray())
+    {
+        if (movie.NoBorrowings > L[0].NoBorrowings)
+        {
+            L[2] = L[1];
+            L[1] = L[0];
+            L[0] = movie;
+        }
+        else if (movie.NoBorrowings > L[1].NoBorrowings)
+        {
+            L[2] = L[1];
+            L[1] = movie;
+        }
+        else if (movie.NoBorrowings > L[2].NoBorrowings)
+        {
+            L[2] = movie;
+        }
+    }
+    return L;
+}
+
+// Liam's algo
+void DisplayTop3Movies() {
+    Movie movie1 = new Movie("Movie 1 - 1");
+    Movie movie2 = new Movie("Movie 2 - 2");
+    Movie movie3 = new Movie("Movie 3 - 3");
+    Movie movie4 = new Movie("Movie 4 - 4");
+    Movie movie5 = new Movie("Movie 5 - 5");
+    Movie movie6 = new Movie("Movie 6 - 1");
+    Movie movie7 = new Movie("Movie 7 - 2");
+    Movie movie8 = new Movie("Movie 8 - 3");
+    Movie movie9 = new Movie("Movie 9 - 4");
+
+    movie1.NoBorrowings = 1;
+    movie2.NoBorrowings = 2;
+    movie3.NoBorrowings = 3;
+    movie4.NoBorrowings = 4;
+    movie5.NoBorrowings = 5;
+    movie6.NoBorrowings = 1;
+    movie7.NoBorrowings = 2;
+    movie8.NoBorrowings = 3;
+    movie9.NoBorrowings = 4;
+
+    MovieCollection movieCollection = new MovieCollection();
+    movieCollection.Insert(movie1);
+    movieCollection.Insert(movie2);
+    movieCollection.Insert(movie3);
+    movieCollection.Insert(movie4);
+    movieCollection.Insert(movie5);
+    movieCollection.Insert(movie6);
+    movieCollection.Insert(movie7);
+    movieCollection.Insert(movie8);
+    movieCollection.Insert(movie9);
+
+    Movie[] mostPopular = ThreeLargest(movieCollection);
+    foreach (Movie movie in mostPopular)
+    {
+        Console.WriteLine($">{movie.Title}");
+    }
+}
 
 MainMenu();

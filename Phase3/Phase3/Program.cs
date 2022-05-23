@@ -421,42 +421,25 @@ Movie[] ThreeLargest(MovieCollection movieCollection)
 
 // Liam's algo
 void DisplayTop3Movies() {
-    Movie movie1 = new Movie("Movie 1 - 1");
-    Movie movie2 = new Movie("Movie 2 - 2");
-    Movie movie3 = new Movie("Movie 3 - 3");
-    Movie movie4 = new Movie("Movie 4 - 4");
-    Movie movie5 = new Movie("Movie 5 - 5");
-    Movie movie6 = new Movie("Movie 6 - 1");
-    Movie movie7 = new Movie("Movie 7 - 2");
-    Movie movie8 = new Movie("Movie 8 - 3");
-    Movie movie9 = new Movie("Movie 9 - 4");
-
-    movie1.NoBorrowings = 1;
-    movie2.NoBorrowings = 2;
-    movie3.NoBorrowings = 3;
-    movie4.NoBorrowings = 4;
-    movie5.NoBorrowings = 5;
-    movie6.NoBorrowings = 1;
-    movie7.NoBorrowings = 2;
-    movie8.NoBorrowings = 3;
-    movie9.NoBorrowings = 4;
-
-    MovieCollection movieCollection = new MovieCollection();
-    movieCollection.Insert(movie1);
-    movieCollection.Insert(movie2);
-    movieCollection.Insert(movie3);
-    movieCollection.Insert(movie4);
-    movieCollection.Insert(movie5);
-    movieCollection.Insert(movie6);
-    movieCollection.Insert(movie7);
-    movieCollection.Insert(movie8);
-    movieCollection.Insert(movie9);
-
-    Movie[] mostPopular = ThreeLargest(movieCollection);
-    foreach (Movie movie in mostPopular)
+    if (collection.Number <= 0)
     {
-        Console.WriteLine($">{movie.Title}");
+        Console.WriteLine("There are no movies in the collection!");
+        Console.ReadKey();
+        MemberMenu();
     }
+
+    Console.WriteLine("\nThe most popular movies are:");
+    Movie[] mostPopular = ThreeLargest(collection);
+    for (int i = 0; i < mostPopular.Length; i++)
+    {
+        if (mostPopular[i].NoBorrowings >= 0)
+        {
+            Console.WriteLine($"{i+1}. {mostPopular[i].Title} has been borrowed {mostPopular[i].NoBorrowings} time(s)");
+        }
+    }
+
+    Console.ReadKey();
+    MemberMenu();
 }
 
 MainMenu();

@@ -17,6 +17,7 @@ void Header()
 int CreateMenu(string title, string[] options)
 {
     Header();
+    Console.WriteLine(Console.WindowWidth);
     string titleLines = new string('=', (60 - title.Length) / 2);
     Console.WriteLine(titleLines + title + titleLines);
     Console.WriteLine();
@@ -421,9 +422,42 @@ Movie[] ThreeLargest(MovieCollection movieCollection)
 
 // Liam's algo
 void DisplayTop3Movies() {
+    MovieCollection collection = new MovieCollection();
+    Movie m1 = new Movie("Calvination");
+    m1.NoBorrowings = 2;
+    Movie m2 = new Movie("Calvination II");
+    m2.NoBorrowings = 1;
+    Movie m3 = new Movie("CJ's New Beginning");
+    m3.NoBorrowings = 3;
+    Movie m4 = new Movie("The Engineer CJ");
+    m4.NoBorrowings = 0;
+    Movie m5 = new Movie("MXB344");
+    m5.NoBorrowings = 5;
+    Movie m6 = new Movie("MXB341");
+    m6.NoBorrowings = 3;
+    Movie m7 = new Movie("Any Marvel Movie");
+    m7.NoBorrowings = 15;
+    Movie m8 = new Movie("CAB420");
+    m8.NoBorrowings = 8;
+    Movie m9 = new Movie("CAB301");
+    m9.NoBorrowings = 12;
+    Movie m10 = new Movie("Any DC Movie");
+    m10.NoBorrowings = 0;
+
+    collection.Insert(m1);
+    collection.Insert(m2);
+    collection.Insert(m3);
+    collection.Insert(m4);
+    collection.Insert(m5);
+    collection.Insert(m6);
+    collection.Insert(m7);
+    collection.Insert(m8);
+    collection.Insert(m9);
+    collection.Insert(m10);
+
     if (collection.Number <= 0)
     {
-        Console.WriteLine("There are no movies in the collection!");
+        Console.WriteLine("\nThere are no movies in the collection!");
         Console.ReadKey();
         MemberMenu();
     }
@@ -442,4 +476,5 @@ void DisplayTop3Movies() {
     MemberMenu();
 }
 
-MainMenu();
+DisplayTop3Movies();
+

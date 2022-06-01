@@ -59,3 +59,17 @@ with open('./time2.csv', 'w') as f:
     for i in range(len(basic_operations)):
         write.writerow([increment*i, basic_operations[i]])
    # write.writerows(([row] for row in basic_operations))
+   
+def threeLargestREAL(A):
+    L = [-math.inf, -math.inf, -math.inf]
+    for i in range(len(A)):
+        if A[i] > L[0]:
+            L[2] = L[1]
+            L[1] = L[0]
+            L[0] = A[i]
+        elif A[i] > L[1]:
+            L[2] = L[1]
+            L[1] = A[i]
+        elif A[i] > L[2]:
+            L[2] = A[i]
+    return L
